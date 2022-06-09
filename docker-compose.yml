@@ -42,7 +42,7 @@ services:
     labels:
       - "traefik.enable=true"
       #- "traefik.http.routers.spark-master.rule=PathPrefix(`/spark-master`) || (HeadersRegexp(`Referer`, `http://localhost/spark-master`) && (PathPrefix(`/static`) || PathPrefix(`/app`) ))"
-      - "traefik.http.routers.spark-master.rule=PathPrefix(`/spark-master`) || ((HeadersRegexp(`Referer`, `http://10.0.2.15/spark-master`) || HeadersRegexp(`Referer`, `http://localhost/app`)) && (PathPrefix(`/static`) || PathPrefix(`/app`) ))"
+      - "traefik.http.routers.spark-master.rule=PathPrefix(`/spark-master`) || ((HeadersRegexp(`Referer`, `http://10.0.2.15/spark-master`) || HeadersRegexp(`Referer`, `http://10.0.2.15 /app`)) && (PathPrefix(`/static`) || PathPrefix(`/app`) ))"
       - "traefik.http.services.spark-master.loadbalancer.server.port=8080"
       - "traefik.http.routers.spark-master.entrypoints=web"
 
@@ -50,7 +50,7 @@ services:
     image: andreper/spark-worker:3.0.0
     container_name: spark-worker-1
     environment:
-      - SPARK_WORKER_CORES=4
+      - SPARK_WORKER_CORES=3
       - SPARK_WORKER_MEMORY=2048m
     volumes:
       - ./workspace:/opt/workspace
@@ -66,7 +66,7 @@ services:
     image: andreper/spark-worker:3.0.0
     container_name: spark-worker-2
     environment:
-      - SPARK_WORKER_CORES=4
+      - SPARK_WORKER_CORES=3
       - SPARK_WORKER_MEMORY=2048m
     volumes:
       - ./workspace:/opt/workspace
